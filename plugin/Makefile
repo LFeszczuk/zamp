@@ -1,14 +1,18 @@
 
+CPPFLAGS=-Wall -fPIC -pedantic -std=c++17 -iquote inc -iquote ../inc
+LDFLAGS=-Wall -shared
+#OBJDIR=/tmp/${USER}/plugins/obj
+OBJDIR=./obj
 
-__start__: obj __lines_for_space__ ../libs/libInterp4Move.so ../libs/libInterp4Set.so ../libs/libInterp4Rotate.so ../libs/libInterp4Pause.so
+
+
+
+__start__: ${OBJDIR} __lines_for_space__ ../libs/libInterp4Move.so ../libs/libInterp4Rotate.so 
 	@echo "  Tworzenie wtyczki zakonczone."
 	@echo
 
-obj:
-	mkdir obj
-
-CPPFLAGS=-Wall -fPIC -pedantic -std=c++17 -iquote inc -iquote ../inc
-LDFLAGS=-Wall -shared
+${OBJDIR}:
+	mkdir -p ${OBJDIR}
 
 __lines_for_space__:
 	@echo
@@ -17,52 +21,94 @@ __lines_for_space__:
 	@echo
 	@echo
 
-../libs/libInterp4Move.so: obj/Interp4Move.o
-	g++ ${LDFLAGS} -o ../libs/libInterp4Move.so obj/Interp4Move.o
+#-----------------------------------------------------------------------------
+#
+#  Wtyczka libInterp4Move.so
+#
+
+../libs/libInterp4Move.so: ${OBJDIR}/Interp4Move.o ${OBJDIR}/network_sending.o
+	g++ ${LDFLAGS} -o ../libs/libInterp4Move.so ${OBJDIR}/Interp4Move.o\
+                          ${OBJDIR}/network_sending.o
 	@echo
 	@echo "  Wtyczka dla polecenia 'Move' zostala utworzona."
 	@echo
 
 
-obj/Interp4Move.o: src/Interp4Move.cpp ../inc/Interp4Command.hh\
+${OBJDIR}/Interp4Move.o: src/Interp4Move.cpp ../inc/Interp4Command.hh\
                         inc/Interp4Move.hh 
-	g++ -c ${CPPFLAGS} -o obj/Interp4Move.o src/Interp4Move.cpp
-
-../libs/libInterp4Set.so: obj/Interp4Set.o
-	g++ ${LDFLAGS} -o ../libs/libInterp4Set.so obj/Interp4Set.o
-	@echo
-	@echo "  Wtyczka dla polecenia 'Set' zostala utworzona."
-	@echo
+	g++ -c ${CPPFLAGS} -o ${OBJDIR}/Interp4Move.o src/Interp4Move.cpp
 
 
-obj/Interp4Set.o: src/Interp4Set.cpp ../inc/Interp4Command.hh\
-                        inc/Interp4Set.hh 
-	g++ -c ${CPPFLAGS} -o obj/Interp4Set.o src/Interp4Set.cpp
-
-../libs/libInterp4Pause.so: obj/Interp4Pause.o
-	g++ ${LDFLAGS} -o ../libs/libInterp4Pause.so obj/Interp4Pause.o
-	@echo
-	@echo "  Wtyczka dla polecenia 'Pause' zostala utworzona."
-	@echo
+#-----------------------------------------------------------------------------
+#
+#  Wtyczka libInterp4Rotate.so
+#
 
 
-obj/Interp4Pause.o: src/Interp4Pause.cpp ../inc/Interp4Command.hh\
-                        inc/Interp4Pause.hh 
-	g++ -c ${CPPFLAGS} -o obj/Interp4Pause.o src/Interp4Pause.cpp
-
-../libs/libInterp4Rotate.so: obj/Interp4Rotate.o
-	g++ ${LDFLAGS} -o ../libs/libInterp4Rotate.so obj/Interp4Rotate.o
+../libs/libInterp4Rotate.so: ${OBJDIR}/Interp4Rotate.o ${OBJDIR}/network_sending.o
+	g++ ${LDFLAGS} -o ../libs/libInterp4Rotate.so ${OBJDIR}/Interp4Rotate.o\
+                           ${OBJDIR}/network_sending.o
 	@echo
 	@echo "  Wtyczka dla polecenia 'Rotate' zostala utworzona."
 	@echo
 
 
-obj/Interp4Rotate.o: src/Interp4Rotate.cpp ../inc/Interp4Command.hh\
+${OBJDIR}/Interp4Rotate.o: src/Interp4Rotate.cpp ../inc/Interp4Command.hh\
                         inc/Interp4Rotate.hh 
-	g++ -c ${CPPFLAGS} -o obj/Interp4Rotate.o src/Interp4Rotate.cpp
+	g++ -c ${CPPFLAGS} -o ${OBJDIR}/Interp4Rotate.o src/Interp4Rotate.cpp
+
+
+${OBJDIR}/network_sending.o: src/network_sending.cpp inc/network_sending.hh 
+	g++ -c ${CPPFLAGS} -o ${OBJDIR}/network_sending.o src/network_sending.cpp
+
+#-----------------------------------------------------------------------------
+#
+#  Wtyczka libInterp4set.so
+#
+
+
+../libs/libInterp4Set.so: ${OBJDIR}/Interp4Set.o ${OBJDIR}/network_sending.o
+	g++ ${LDFLAGS} -o ../libs/libInterp4Set.so ${OBJDIR}/Interp4Set.o\
+                           ${OBJDIR}/network_sending.o
+	@echo
+	@echo "  Wtyczka dla polecenia 'set' zostala utworzona."
+	@echo
+
+
+${OBJDIR}/Interp4Set.o: src/Interp4Set.cpp ../inc/Interp4Command.hh\
+                        inc/Interp4Set.hh 
+	g++ -c ${CPPFLAGS} -o ${OBJDIR}/Interp4Set.o src/Interp4Set.cpp
+
+
+${OBJDIR}/network_sending.o: src/network_sending.cpp inc/network_sending.hh 
+	g++ -c ${CPPFLAGS} -o ${OBJDIR}/network_sending.o src/network_sending.cpp
+
+
+	#-----------------------------------------------------------------------------
+#
+#  Wtyczka libInterp4Pause.so
+#
+
+
+../libs/libInterp4Pause.so: ${OBJDIR}/Interp4Pause.o ${OBJDIR}/network_sending.o
+	g++ ${LDFLAGS} -o ../libs/libInterp4Pause.so ${OBJDIR}/Interp4Pause.o\
+                           ${OBJDIR}/network_sending.o
+	@echo
+	@echo "  Wtyczka dla polecenia 'Pause' zostala utworzona."
+	@echo
+
+
+${OBJDIR}/Interp4Pause.o: src/Interp4Pause.cpp ../inc/Interp4Command.hh\
+                        inc/Interp4Pause.hh 
+	g++ -c ${CPPFLAGS} -o ${OBJDIR}/Interp4Pause.o src/Interp4Pause.cpp
+
+
+${OBJDIR}/network_sending.o: src/network_sending.cpp inc/network_sending.hh 
+	g++ -c ${CPPFLAGS} -o ${OBJDIR}/network_sending.o src/network_sending.cpp
+
 
 clean:
-	rm -f obj/*
+	rm -f ${OBJDIR}/*
 
 cleanall: clean
 	find . -name \*~ -print -exec rm {} \;

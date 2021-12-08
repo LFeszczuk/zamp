@@ -22,6 +22,14 @@
  * pliku XML.
  */
 class XMLInterp4Config : public xercesc::DefaultHandler {
+
+  /*!
+   * \brief Wczytywana konfiguracja.
+   *
+   * Pole jest referencją do klasy, która będzie przechowywać wczytaną
+   * konfigurację.
+   */
+  Configuration &_rMainConfig;
   public:
    /*!
     * \brief Inicjalizuje obiekt i kojarzy go z listą poleceń robota
@@ -41,18 +49,18 @@ class XMLInterp4Config : public xercesc::DefaultHandler {
     * \brief Wywoływana jest po napotkaniu nowego elementu XML
     */
     virtual void startElement(
-                    const XMLCh *const               pURI, 
-                    const XMLCh *const               pLocalName, 
-                    const XMLCh *const               pQNname,
-                    const   xercesc::Attributes&     rAttrs
+                    const XMLCh *const pURI,
+                    const XMLCh *const pLocalName,
+                    const XMLCh *const pQNname,
+                    const   xercesc::Attributes&     attrs
                   ) override;
 
    /*!
     * \brief Wywoływana jest po dojściu do końca elementu XML
     */
     virtual  void endElement(
-                    const XMLCh *const pURI, 
-                    const XMLCh *const pLocalName, 
+                    const XMLCh *const pURI,
+                    const XMLCh *const pLocalName,
                     const XMLCh *const pQNname
                    ) override;
    /*!
@@ -62,27 +70,27 @@ class XMLInterp4Config : public xercesc::DefaultHandler {
    /*!
     * \brief Wywoływana jest gdy napotkany zostanie błąd
     */
-    void error(const xercesc::SAXParseException &);
+    void error(const xercesc::SAXParseException &exc);
    /*!
     * \brief Wywoływana jest gdy parser sygnalizuje ostrzeżenie
     */
-    void warning(const xercesc::SAXParseException &);
+    void warning(const xercesc::SAXParseException &exc);
 
 
     /*!
      * \brief Wykonuje operacje związane z danym elementem XML
      */
-    void WhenStartElement( const std::string&             rElemName,
-		           const xercesc::Attributes&     rAttrs
+    void WhenStartElement( const std::string&             ElemName,
+		           const xercesc::Attributes&     Attrs
                          );
     /*!
      * \brief Analizuje atrybuty i  odpwiednio je interpretuje
      */
-    void ProcessLibAttrs(const xercesc::Attributes&   rAttrs);
+    void ProcessLibAttrs(const xercesc::Attributes&   Attrs);
     /*!
      * \brief Analizuje atrybuty i odpwiednio je interpretuje
      */
-    void ProcessCubeAttrs(const xercesc::Attributes&   rAttrs); 
+    void ProcessCubeAttrs(const xercesc::Attributes&   Attrs);
   private:
 };
 

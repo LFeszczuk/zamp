@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Interp4Pause.hh"
-#include "MobileObj.hh"
+#include <memory>
+#include "network_sending.hh"
 
 using std::cout;
 using std::endl;
@@ -50,11 +51,9 @@ const char *Interp4Pause::GetCmdName() const
 /*!
  *
  */
-bool Interp4Pause::ExecCmd(MobileObj *pMobObj, int Socket) const
+bool Interp4Pause::ExecCmd(Scene * pScn,AccessGuard *pAccGuard) const
 {
-    /*
-   *  Tu trzeba napisać odpowiedni kod.
-   */
+   cout<<"Zatrzymanie  ::  Pause"<<endl;
     return true;
 }
 

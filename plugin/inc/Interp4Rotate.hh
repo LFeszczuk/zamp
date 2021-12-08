@@ -22,7 +22,7 @@
  */
 class Interp4Rotate : public Interp4Command
 {
-/*!
+  /*!
    *  \brief Nazwa objektu
    *
    *  Nazwa objektu dla którego ma zostać wykonane polecenie
@@ -34,7 +34,7 @@ class Interp4Rotate : public Interp4Command
    *  Prędkość z jaką ma się poruszać obiekt 
    */
   double _V_ang;
-   /*!
+  /*!
    *  \brief Nazwa osi
    *
    *  Oś wokół której ma się obracać obiekt
@@ -67,7 +67,7 @@ public:
   /*!
    * \brief Wykonuje polecenie oraz wizualizuje jego realizację
    */
-  virtual bool ExecCmd(MobileObj *pMobObj, int Socket) const;
+  virtual bool ExecCmd(Scene *pScn, AccessGuard *pAccGuard) const;
   /*!
    * \brief Czyta wartości parametrów danego polecenia
    */
