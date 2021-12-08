@@ -2,11 +2,11 @@
 /*
  *  Przykładowy zestaw poleceń
  */
-  Set   Ob_A 2 0 30 0 0   // Polozenie obiektu A 
-  Set   Ob_B 10 10 0 0 0  // Polozenie obiektu B
-  Rotate Ob_B ROTATE_SPEED 40 20
+  //Set   Podstawa 2 0 30 0 0   // Polozenie obiektu A 
+  //Set   Podstawa.Ramie1 10 10 0 0 0  // Polozenie obiektu B
+  Rotate Podstawa ROTATE_SPEED 40 20
   Pause 1000 /* Zawieszenie na 1 sek. */
   Move  Ob_A  10 10
-  Rotate Ob_B ROTATE_SPEED 60 20 /* Rotate i Move wykonywane razem */
-  Move  Ob_B 10 20            /* powoduja jazde po luku         */
-  Mose  Ob_B 10 20            /* powoduja jazde po luku         */
+  Rotate Podstawa.Ramie1 ROTATE_SPEED 60 20 /* Rotate i Move wykonywane razem */
+  Move  Podstawa.Ramie1 10 20            /* powoduja jazde po luku         */
+  Move  Podstawa.Ramie1 10 20            /* powoduja jazde po luku         */

@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Interp4Move.hh"
 #include "MobileObj.hh"
+#include "network_sending.hh"
 
 using std::cout;
 using std::endl;
@@ -50,11 +51,11 @@ const char *Interp4Move::GetCmdName() const
 /*!
  *
  */
-bool Interp4Move::ExecCmd(MobileObj *pMobObj, int Socket) const
+bool Interp4Move::ExecCmd(Scene * pScn,AccessGuard *pAccGuard) const
 {
  
- //cout<<_Obj_name<<_Speed_mmS<<_Dist_m<<endl;
-  //return true;
+  cout<<"Poruszanie :: Move"<<endl;
+  return true;
 }
 
 /*!
